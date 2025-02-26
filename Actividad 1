@@ -15,6 +15,15 @@ madre_de(jacqueline, selma).
 madre_de(selma, ling).
 madre_de(marge, lisa).
 madre_de(marge, maggie).
+hombre(bart).
+hombre(herbert).
+hombre(homero).
+mujer(ling).
+mujer(patty).
+mujer(selma).
+mujer(lisa).
+mujer(maggie).
+mujer(marge).
 
 abuelo_de(X,Y) :- padre_de(X,Z), padre_de(Z,Y).
 abuelo_de(X,Y) :- padre_de(X,Z), madre_de(Z,Y).
