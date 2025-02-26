@@ -1,3 +1,5 @@
 estadounidense(coronel_west).
 nacion_hostil(corea_del_sur). 
 vende_arma(coronel_west, misiles, corea_del_sur).
+criminal(Persona) :- estadounidense(Persona), vende_arma(Persona, _, Nacion), nacion_hostil(Nacion).
+ 
