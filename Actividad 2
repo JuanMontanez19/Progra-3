@@ -1,0 +1,31 @@
+conectado(vancouver, edmonton, 16).
+conectado(vancouver, calgary, 13).
+conectado(edmonton, saskatoon, 12).
+conectado(calgary, edmonton, 4).
+conectado(calgary, regina, 14).
+conectado(saskatoon, winnipeg, 20).
+conectado(saskatoon, calgary, 9).
+conectado(regina, saskatoon, 7).
+conectado(regina, winnipeg, 4).
+
+
+conexion(X, Y) :- conectado(X, Y, _).
+
+
+
+camino(X, Y) :- conexion(X, Y).
+camino(X, Y) :- conexion(X, Z), conexion(Z, Y).
+
+
+conexiones(Nodo, OtroNodo, Costo) :- conectado(Nodo, OtroNodo, Costo).
+conexiones(Nodo, OtroNodo, Costo) :- conectado(OtroNodo, Nodo, Costo).
+
+
+tiene_aristas(Nodo) :- conectado(Nodo, _, _).
+tiene_aristas(Nodo) :- conectado(_, Nodo, _).
+
+
+costo_intermedio(X, Y, Z, CostoTotal) :-
+    conectado(X, Y, C1),
+    conectado(Y, Z, C2),
+    CostoTotal is C1 + C2.
