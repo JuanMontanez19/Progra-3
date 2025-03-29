@@ -1,21 +1,28 @@
 padres_de(homero, [bart, lisa, maggie]).
- padres_de(abraham, [homero, herbert]).
- padres_de(clancy, [marge, patty, selma]).
- padres_de(marge, [bart, lisa, maggie]).
- padres_de(mona, [homero, herbert]).
- padres_de(jacqueline, [marge, patty, selma]).
- padres_de(selma, [ling]).
- 
- hombre(bart).
- hombre(herbert).
- hombre(homero).
- 
- mujer(ling).
- mujer(patty).
- mujer(selma).
- mujer(lisa).
- mujer(maggie).
- mujer(marge).
+padres_de(abraham, [homero, herbert]).
+padres_de(clancy, [marge, patty, selma]).
+padres_de(marge, [bart, lisa, maggie]).
+padres_de(mona, [homero, herbert]).
+padres_de(jacqueline, [marge, patty, selma]).
+padres_de(selma, [ling]).
+
+hombre(clancy).
+hombre(bart).
+hombre(herbert).
+hombre(homero).
+hombre(abraham).
+
+mujer(ling).
+mujer(patty).
+mujer(selma).
+mujer(lisa).
+mujer(maggie).
+mujer(marge).
+mujer(jacqueline).
+mujer(mona).
+
+
+
  
  padre_de(X,Y) :- padres_de(X,Hijos), member(Y, Hijos), hombre(X).
  madre_de(X,Y) :- padres_de(X,Hijos), member(Y, Hijos), mujer(X).
@@ -36,9 +43,3 @@ padres_de(homero, [bart, lisa, maggie]).
  tio_de(X,Y) :- hermano_de(X,Z), madre_de(Z,Y).
  
  
- 
-sobrino_de(X,Y) :- tio_de(Y,X), hombre(X).
-sobrino_de(X,Y) :- tia_de(Y,X), hombre(X).
-
-sobrina_de(X,Y) :- tio_de(Y,X), mujer(X).
-sobrina_de(X,Y) :- tia_de(Y,X), mujer(X).
