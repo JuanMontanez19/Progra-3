@@ -1,0 +1,56 @@
+padres_de(homero, [bart, lisa, maggie]).
+padres_de(abraham, [homero, herbert]).
+padres_de(clancy, [marge, patty, selma]).
+padres_de(marge, [bart, lisa, maggie]).
+padres_de(mona, [homero, herbert]).
+padres_de(jacqueline, [marge, patty, selma]).
+padres_de(selma, [ling]).
+
+hombre(bart).
+hombre(herbert).
+hombre(homero).
+
+mujer(ling).
+mujer(patty).
+mujer(selma).
+mujer(lisa).
+mujer(maggie).
+mujer(marge).
+
+padre_de(X,Y) :- padres_de(X,Hijos), member(Y, Hijos), hombre(X).
+madre_de(X,Y) :- padres_de(X,Hijos), member(Y, Hijos), mujer(X).
+
+abuelo_de(X,Y) :- padre_de(X,Z), padre_de(Z,Y).
+abuelo_de(X,Y) :- padre_de(X,Z), madre_de(Z,Y).
+
+abuela_de(X,Y) :- madre_de(X,Z), padre_de(Z,Y).
+abuela_de(X,Y) :- madre_de(X,Z), madre_de(Z,Y).
+
+hermano_de(X,Y) :- padre_de(Z,X), padre_de(Z,Y), hombre(X), X \= Y.
+hermana_de(X,Y) :- padre_de(Z,X), padre_de(Z,Y), mujer(X), X \= Y.
+
+tia_de(X,Y) :- hermana_de(X,Z), padre_de(Z,Y).
+tia_de(X,Y) :- hermana_de(X,Z), madre_de(Z,Y).
+
+tio_de(X,Y) :- hermano_de(X,Z), padre_de(Z,Y).
+tio_de(X,Y) :- hermano_de(X,Z), madre_de(Z,Y).
+
+primo_o_prima_de(X,Y) :- padre_de(A,X), padre_de(B,Y), hermano_de(A,B).
+primo_o_prima_de(X,Y) :- madre_de(A,X), madre_de(B,Y), hermana_de(A,B).
+primo_o_prima_de(X,Y) :- padre_de(A,X), madre_de(B,Y), hermano_de(A,B).
+primo_o_prima_de(X,Y) :- madre_de(A,X), padre_de(B,Y), hermana_de(A,B).
+
+primo_de(X,Y) :- primo_o_prima_de(X,Y), hombre(X).
+prima_de(X,Y) :- primo_o_prima_de(X,Y), mujer(X).
+
+hermanastro_de(X,Y) :- padre_de(Z,X), padre_de(Z,Y), X \= Y, \+ madre_de(W,X), \+ madre_de(W,Y), hombre(X).
+hermanastro_de(X,Y) :- madre_de(Z,X), madre_de(Z,Y), X \= Y, \+ padre_de(W,X), \+ padre_de(W,Y), hombre(X).
+
+hermanastra_de(X,Y) :- padre_de(Z,X), padre_de(Z,Y), X \= Y, \+ madre_de(W,X), \+ madre_de(W,Y), mujer(X).
+hermanastra_de(X,Y) :- madre_de(Z,X), madre_de(Z,Y), X \= Y, \+ padre_de(W,X), \+ padre_de(W,Y), mujer(X).
+
+sobrino_de(X,Y) :- tio_de(Y,X), hombre(X).
+sobrino_de(X,Y) :- tia_de(Y,X), hombre(X).
+
+sobrina_de(X,Y) :- tio_de(Y,X), mujer(X).
+sobrina_de(X,Y) :- tia_de(Y,X), mujer(X).
