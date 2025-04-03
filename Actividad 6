@@ -1,0 +1,32 @@
+padres(homero, marge, [bart, lisa, maggie]).
+padres(abraham, mona, [homero, herbert]).
+padres(clancy, jacqueline, [marge, patty, selma]).
+padres(selma, _, [ling]).
+
+hombre(clancy).
+hombre(bart).
+hombre(herbert).
+hombre(homero).
+hombre(abraham).
+
+mujer(ling).
+mujer(patty).
+mujer(selma).
+mujer(lisa).
+mujer(maggie).
+mujer(marge).
+mujer(jacqueline).
+mujer(mona).
+
+padre_de(X, Y) :- padres(X, _, Hijos), member(Y, Hijos).
+madre_de(X, Y) :- padres(_, X, Hijos), member(Y, Hijos).
+
+abuelo_de(X, Y) :- padre_de(X, Z), (padre_de(Z, Y); madre_de(Z, Y)).
+abuela_de(X, Y) :- madre_de(X, Z), (padre_de(Z, Y); madre_de(Z, Y)).
+
+hermano_de(X, Y) :- padres(_, _, Hijos), member(X, Hijos), member(Y, Hijos), hombre(X), X \= Y.
+hermana_de(X, Y) :- padres(_, _, Hijos), member(X, Hijos), member(Y, Hijos), mujer(X), X \= Y.
+
+tio_de(X, Y) :- hermano_de(X, Z), (padre_de(Z, Y); madre_de(Z, Y)).
+tia_de(X, Y) :- hermana_de(X, Z), (padre_de(Z, Y); madre_de(Z, Y)).
+
